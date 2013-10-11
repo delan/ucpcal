@@ -32,28 +32,25 @@ const char *ucpcal_duration_friendly(unsigned int minutes) {
 	int output_hours = minutes / 60;
 	int output_minutes = minutes % 60;
 	if (output_hours != 0 && output_minutes != 0)
-		snprintf(
+		sprintf(
 			result,
-			sizeof(result),
-			"%d hour%s, %d minute%s",
+			"%u hour%s, %u minute%s",
 			output_hours,
 			output_hours == 1 ? "" : "s",
 			output_minutes,
 			output_minutes == 1 ? "" : "s"
 		);
 	else if (output_hours != 0)
-		snprintf(
+		sprintf(
 			result,
-			sizeof(result),
-			"%d hour%s",
+			"%u hour%s",
 			output_hours,
 			output_hours == 1 ? "" : "s"
 		);
 	else
-		snprintf(
+		sprintf(
 			result,
-			sizeof(result),
-			"%d minute%s",
+			"%u minute%s",
 			output_minutes,
 			output_minutes == 1 ? "" : "s"
 		);
