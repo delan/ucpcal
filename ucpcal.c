@@ -21,3 +21,23 @@ int main(int argc, char **argv) {
 	}
 	return return_value;
 }
+
+char *ucpcal_readline(void) {
+	/* A sane starting buffer size that may minimise reallocations. */
+	size_t bufsize = 32;
+	size_t used = 0;
+	char *result = (char *) malloc(bufsize);
+	int ch = getchar();
+	while (ch != '\n' && ch != EOF) {
+		if (used == bufsize) {
+			bufsize *= 2;
+			result = (char *) realloc(result, bufsize);
+		}
+		result[used] = ch;
+		used++;
+		ch = getchar();
+	}
+	result = (char *) realloc(result, used + 1);
+	result[used] = 0;
+	return result;
+}
