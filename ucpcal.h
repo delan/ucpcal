@@ -79,10 +79,23 @@ void ucpcal_gui_add(void *state);
 
 /**
  * @brief GUI: edits an event in the current calendar.
+ * Initial stage; obtains the event name first and then subsequently calls
+ * ucpcal_gui_edit_more() which asks for new data.
  * @param state the ucpcal_state consisting of a window and linked list
  */
 
 void ucpcal_gui_edit(void *state);
+
+
+/**
+ * @brief GUI: finishes editing an event.
+ * Final stage; given an event, actually obtains the new event data to be
+ * stored back into the event.
+ * @param state the ucpcal_state consisting of a window and linked list
+ * @param event the event
+ */
+
+void ucpcal_gui_edit_more(void *state, ucpcal_event *event);
 
 /**
  * @brief GUI: deletes an event from the current calendar.

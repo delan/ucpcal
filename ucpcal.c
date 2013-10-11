@@ -153,8 +153,8 @@ void ucpcal_gui_add(void *state) {
 		event->date.day = atoi(inputs[2]);
 		event->date.hour = atoi(inputs[3]);
 		event->date.minute = atoi(inputs[4]);
-		event->duration = atoi(inputs[5]);
 		event->date.good = 1;
+		event->duration = atoi(inputs[5]);
 		event->name = inputs[6];
 		if (strlen(inputs[7]) > 0)
 			event->location = inputs[7];
@@ -168,7 +168,66 @@ void ucpcal_gui_add(void *state) {
 }
 
 void ucpcal_gui_edit(void *state) {
-	/**/
+	ucpcal_state *s = (ucpcal_state *) state;
+	InputProperties props[] = {{ "Name of event", 255, 0 }};
+	char *name = (char *) calloc(256, sizeof(char));
+	ucpcal_event *event;
+	if (dialogBox(s->win, "Edit calendar event", 1, props, &name))
+		if ((event = ucpcal_list_find(s->list, name)))
+			ucpcal_gui_edit_more(s, event);
+	free(name);
+}
+
+void ucpcal_gui_edit_more(void *state, ucpcal_event *event) {
+	ucpcal_state *s = (ucpcal_state *) state;
+	InputProperties props[] = {
+		{ "Year", 24, 0 },
+		{ "Month", 2, 0 },
+		{ "Day", 2, 0 },
+		{ "Hour", 2, 0 },
+		{ "Minute", 2, 0 },
+		{ "Duration in minutes", 24, 0 },
+		{ "Name of event", 255, 0 },
+		{ "Optional location", 255, 0 }
+	};
+	int i;
+	char *inputs[8];
+	inputs[0] = (char *) calloc(25, sizeof(char));
+	sprintf(inputs[0], "%d", event->date.year);
+	inputs[1] = (char *) calloc(3, sizeof(char));
+	sprintf(inputs[1], "%d", event->date.month);
+	inputs[2] = (char *) calloc(3, sizeof(char));
+	sprintf(inputs[2], "%d", event->date.day);
+	inputs[3] = (char *) calloc(3, sizeof(char));
+	sprintf(inputs[3], "%d", event->date.hour);
+	inputs[4] = (char *) calloc(3, sizeof(char));
+	sprintf(inputs[4], "%d", event->date.minute);
+	inputs[5] = (char *) calloc(25, sizeof(char));
+	sprintf(inputs[5], "%d", event->duration);
+	inputs[6] = (char *) calloc(256, sizeof(char));
+	strcpy(inputs[6], event->name);
+	inputs[7] = (char *) calloc(256, sizeof(char));
+	if (event->location)
+		strcpy(inputs[7], event->location);
+	if (dialogBox(s->win, "Edit calendar event", 8, props, inputs)) {
+		free(event->name);
+		free(event->location);
+		event->date.year = atoi(inputs[0]);
+		event->date.month = atoi(inputs[1]);
+		event->date.day = atoi(inputs[2]);
+		event->date.hour = atoi(inputs[3]);
+		event->date.minute = atoi(inputs[4]);
+		event->date.good = 1;
+		event->duration = atoi(inputs[5]);
+		event->name = inputs[6];
+		if (strlen(inputs[7]) > 0)
+			event->location = inputs[7];
+		else
+			free(inputs[7]);
+		ucpcal_gui_update(s);
+	}
+	for (i = 0; i < 6; i++)
+		free(inputs[i]);
 }
 
 void ucpcal_gui_delete(void *state) {
