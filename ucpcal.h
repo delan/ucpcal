@@ -15,6 +15,15 @@
 #include "list.h"
 
 /**
+ * @brief The main entry point for the calendar application.
+ * @param argc the number of command line arguments
+ * @param argv the command line argument vector
+ * @return 1 where an error has occurred, 0 otherwise
+ */
+
+int main(int argc, char **argv);
+
+/**
  * @brief Reads a string from stdin until the next newline.
  * Allocates and reallocates buffers of increasing size as more space is
  * required, doubling the size of the buffer each time to only require O(log n)
