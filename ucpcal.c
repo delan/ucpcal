@@ -8,6 +8,7 @@
 int main(int argc, char **argv) {
 	int return_value = 0;
 	ucpcal_list *list = NULL;
+	Window *win;
 	switch (argc) {
 	case 1:
 		break;
@@ -19,6 +20,9 @@ int main(int argc, char **argv) {
 		return_value = 1;
 		break;
 	}
+	win = createWindow("Unix and C Programming 120: Calendar");
+	runGUI(win);
+	freeWindow(win);
 	ucpcal_list_free(list);
 	return return_value;
 }
