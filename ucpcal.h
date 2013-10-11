@@ -30,6 +30,15 @@ int main(int argc, char **argv);
 void ucpcal_gui(void);
 
 /**
+ * @brief Builds a heap allocated string from the current calendar for the GUI.
+ * Be sure to use free() when finished.
+ * @param list the linked list of calendar events
+ * @return a heap allocated string with GUI calendar output
+ */
+
+char *ucpcal_gui_build_output(ucpcal_list *list);
+
+/**
  * @brief GUI: loads calendar data from a file.
  * @param data unused
  */

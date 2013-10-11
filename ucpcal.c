@@ -35,6 +35,10 @@ void ucpcal_gui(void) {
 	freeWindow(win);
 }
 
+char *ucpcal_gui_build_output(ucpcal_list *list) {
+	/**/
+}
+
 void ucpcal_gui_load(void *data) {
 	/**/
 }
