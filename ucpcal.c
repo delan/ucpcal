@@ -10,6 +10,7 @@ int main(int argc, char **argv) {
 	ucpcal_list *list = NULL;
 	switch (argc) {
 	case 1:
+		list = ucpcal_list_new();
 		break;
 	case 2:
 		list = ucpcal_load(argv[1]);
@@ -19,24 +20,81 @@ int main(int argc, char **argv) {
 		return_value = 1;
 		break;
 	}
-	ucpcal_gui();
+	ucpcal_gui(&list);
 	ucpcal_list_free(list);
 	return return_value;
 }
 
-void ucpcal_gui(void) {
+void ucpcal_gui(ucpcal_list **list) {
+	char *output;
 	Window *win = createWindow("Calendar: Delan Azabani #17065012");
 	addButton(win, "Load a calendar from file", &ucpcal_gui_load, NULL);
 	addButton(win, "Save this calendar to file", &ucpcal_gui_save, NULL);
 	addButton(win, "Add a calendar event", &ucpcal_gui_add, NULL);
 	addButton(win, "Edit a calendar event", &ucpcal_gui_edit, NULL);
 	addButton(win, "Delete a calendar event", &ucpcal_gui_delete, NULL);
+	output = ucpcal_gui_build_output(*list);
+	setText(win, output);
+	free(output);
 	runGUI(win);
 	freeWindow(win);
 }
 
 char *ucpcal_gui_build_output(ucpcal_list *list) {
-	/**/
+	/* result_cursor is used for appending with sprintf() */
+	char *result, *result_cursor;
+	/* First, let's calculate how much to allocate for the string. */
+	/* Start with enough to hold a null terminator. */
+	size_t size = 1;
+	ucpcal_node *cur = list->head;
+	while (cur) {
+		/*
+			This would be a lot easier with the snprintf(0) trick
+			that does nothing but returns the buffer size required,
+			but alas we do not have ISO C99 available in this unit.
+		*/
+		/* Add enough for the event name. */
+		size += strlen(cur->event->name);
+		/* Add enough for " @ ". */
+		size += 3;
+		/* Add enough for the event location. */
+		size += cur->event->location ?
+			strlen(cur->event->location) : 0;
+		/* Add enough for " (". */
+		size += 2;
+		/* Add enough for the worst case friendly duration. */
+		size += 64;
+		/* Add enough for ")\n". */
+		size += 2;
+		/* Add enough for the worst case friendly date and time. */
+		size += 64;
+		/* Add enough for "\n---\n\n". */
+		size += 6;
+		cur = cur->next;
+	}
+	/* Now, let's allocate. */
+	result = (char *) malloc(size);
+	result_cursor = result;
+	/* For each event, let's append to the string. */
+	cur = list->head;
+	while (cur) {
+		/*
+			Print to result_cursor, then advancing result_cursor
+			by the number of bytes printed excluding the null
+			terminator afterwards.
+		*/
+		result_cursor += sprintf(
+			result_cursor,
+			"%s%s%s (%s)\n%s\n---\n\n",
+			cur->event->name,
+			cur->event->location ? " @ " : "",
+			cur->event->location ? cur->event->location : "",
+			ucpcal_duration_friendly(cur->event->duration),
+			ucpcal_date_friendly(cur->event->date)
+		);
+		cur = cur->next;
+	}
+	return result;
 }
 
 void ucpcal_gui_load(void *data) {
@@ -120,6 +178,5 @@ ucpcal_list *ucpcal_load(const char *filename) {
 		} while (!done);
 		fclose(f);
 	}
-	ucpcal_list_print_debug(list);
 	return list;
 }

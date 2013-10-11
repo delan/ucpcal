@@ -37,11 +37,21 @@ ucpcal_date ucpcal_date_scan(FILE *f);
  * @brief Expresses a duration in minutes as a friendly string.
  * The string contains hours and/or minutes where necessary. Uses a static
  * character array for storage to avoid heap allocation, but beware that this
- * makes the function non-reentrant. 40 bytes for the static buffer is enough,
+ * makes the function non-reentrant. 64 bytes for the static buffer is enough,
  * even in the worst case where the platform's unsigned int type is 64 bits.
  * @return a const-qualified string representation of the duration.
  */
 
 const char *ucpcal_duration_friendly(unsigned int minutes);
+
+/**
+ * @brief Expresses a date and time structure as a friendly string.
+ * Uses a static character array for storage to avoid heap allocation, but
+ * beware that this makes the function non-reentrant. 64 bytes should be
+ * enough, even in the worst case.
+ * @return a const-qualified string representation of the duration.
+ */
+
+const char *ucpcal_date_friendly(ucpcal_date date);
 
 #endif

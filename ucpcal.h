@@ -25,9 +25,10 @@ int main(int argc, char **argv);
 
 /**
  * @brief Sets up, runs and cleans up calendar application GUI.
+ * @param listptr a list pointer passed by reference so it can be changed
  */
 
-void ucpcal_gui(void);
+void ucpcal_gui(ucpcal_list **listptr);
 
 /**
  * @brief Builds a heap allocated string from the current calendar for the GUI.

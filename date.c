@@ -29,7 +29,7 @@ ucpcal_date ucpcal_date_scan(FILE *f) {
 }
 
 const char *ucpcal_duration_friendly(unsigned int minutes) {
-	static char result[40] = "";
+	static char result[64] = "";
 	int output_hours = minutes / 60;
 	int output_minutes = minutes % 60;
 	if (output_hours != 0 && output_minutes != 0)
@@ -55,5 +55,50 @@ const char *ucpcal_duration_friendly(unsigned int minutes) {
 			output_minutes,
 			output_minutes == 1 ? "" : "s"
 		);
+	return result;
+}
+
+const char *ucpcal_date_friendly(ucpcal_date date) {
+	static char result[64] = "";
+	static const char *months[] = {
+		NULL, "January", "February", "March", "April",
+		"May", "June", "July", "August",
+		"September", "October", "November", "December"
+	};
+	if (
+		date.year >= 0 &&
+		date.month >= 1 && date.month <= 12 &&
+		date.day >= 1 && date.day <= 31 &&
+		date.hour >= 0 && date.hour <= 23 &&
+		date.minute >= 0 && date.minute <= 59 &&
+		date.good
+	) {
+		int hour = date.hour % 12;
+		if (hour == 0)
+			hour = 12;
+		if (date.minute)
+			sprintf(
+				result,
+				"%d %s %d, %d:%02d %cm",
+				date.day,
+				months[date.month],
+				date.year,
+				hour,
+				date.minute,
+				date.hour > 11 ? 'p' : 'a'
+			);
+		else
+			sprintf(
+				result,
+				"%d %s %d, %d %cm",
+				date.day,
+				months[date.month],
+				date.year,
+				hour,
+				date.hour > 11 ? 'p' : 'a'
+			);
+	} else {
+		strcpy(result, "invalid date and/or time");
+	}
 	return result;
 }
