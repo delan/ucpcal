@@ -25,10 +25,10 @@ int main(int argc, char **argv);
 
 /**
  * @brief Sets up, runs and cleans up calendar application GUI.
- * @param listptr a list pointer passed by reference so it can be changed
+ * @param list a linked list of calendar events
  */
 
-void ucpcal_gui(ucpcal_list **listptr);
+void ucpcal_gui(ucpcal_list *list);
 
 /**
  * @brief Builds a heap allocated string from the current calendar for the GUI.
@@ -41,38 +41,38 @@ char *ucpcal_gui_build_output(ucpcal_list *list);
 
 /**
  * @brief GUI: loads calendar data from a file.
- * @param data unused
+ * @param list the linked list of calendar events
  */
 
-void ucpcal_gui_load(void *data);
+void ucpcal_gui_load(void *list);
 
 /**
  * @brief GUI: saves calendar data to a file.
- * @param data unused
+ * @param list the linked list of calendar events
  */
 
-void ucpcal_gui_save(void *data);
+void ucpcal_gui_save(void *list);
 
 /**
  * @brief GUI: adds an event to the current calendar.
- * @param data unused
+ * @param list the linked list of calendar events
  */
 
-void ucpcal_gui_add(void *data);
+void ucpcal_gui_add(void *list);
 
 /**
  * @brief GUI: edits an event in the current calendar.
- * @param data unused
+ * @param list the linked list of calendar events
  */
 
-void ucpcal_gui_edit(void *data);
+void ucpcal_gui_edit(void *list);
 
 /**
  * @brief GUI: deletes an event from the current calendar.
- * @param data unused
+ * @param list the linked list of calendar events
  */
 
-void ucpcal_gui_delete(void *data);
+void ucpcal_gui_delete(void *list);
 
 /**
  * @brief Reads a string from the given file handle until the next newline.
@@ -89,12 +89,10 @@ char *ucpcal_readline(FILE *f);
 
 /**
  * @brief Loads calendar data from a file into a linked list of events.
- * Automatically allocates and returns a new linked list, nodes and events.
- * Be sure to use ucpcal_list_free() when finished.
+ * @param list the linked list of calendar events
  * @param filename the filename to look for input data in
- * @return pointer to new ucpcal_list struct
  */
 
-ucpcal_list *ucpcal_load(const char *filename);
+void ucpcal_load(ucpcal_list *list, const char *filename);
 
 #endif

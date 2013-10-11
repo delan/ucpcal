@@ -7,33 +7,35 @@
 
 int main(int argc, char **argv) {
 	int return_value = 0;
-	ucpcal_list *list = NULL;
+	ucpcal_list *list = ucpcal_list_new();
 	switch (argc) {
 	case 1:
-		list = ucpcal_list_new();
 		break;
 	case 2:
-		list = ucpcal_load(argv[1]);
+		ucpcal_load(list, argv[1]);
+		ucpcal_load(list, argv[1]);
+		ucpcal_load(list, argv[1]);
+		ucpcal_load(list, argv[1]);
 		break;
 	default:
 		fprintf(stderr, "Usage: %s [filename?]\n", argv[0]);
 		return_value = 1;
 		break;
 	}
-	ucpcal_gui(&list);
+	ucpcal_gui(list);
 	ucpcal_list_free(list);
 	return return_value;
 }
 
-void ucpcal_gui(ucpcal_list **list) {
+void ucpcal_gui(ucpcal_list *list) {
 	char *output;
 	Window *win = createWindow("Calendar: Delan Azabani #17065012");
-	addButton(win, "Load a calendar from file", &ucpcal_gui_load, NULL);
-	addButton(win, "Save this calendar to file", &ucpcal_gui_save, NULL);
-	addButton(win, "Add a calendar event", &ucpcal_gui_add, NULL);
-	addButton(win, "Edit a calendar event", &ucpcal_gui_edit, NULL);
-	addButton(win, "Delete a calendar event", &ucpcal_gui_delete, NULL);
-	output = ucpcal_gui_build_output(*list);
+	addButton(win, "Load a calendar from file", &ucpcal_gui_load, list);
+	addButton(win, "Save this calendar to file", &ucpcal_gui_save, list);
+	addButton(win, "Add a calendar event", &ucpcal_gui_add, list);
+	addButton(win, "Edit a calendar event", &ucpcal_gui_edit, list);
+	addButton(win, "Delete a calendar event", &ucpcal_gui_delete, list);
+	output = ucpcal_gui_build_output(list);
 	setText(win, output);
 	free(output);
 	runGUI(win);
@@ -97,23 +99,23 @@ char *ucpcal_gui_build_output(ucpcal_list *list) {
 	return result;
 }
 
-void ucpcal_gui_load(void *data) {
+void ucpcal_gui_load(void *list) {
 	/**/
 }
 
-void ucpcal_gui_save(void *data) {
+void ucpcal_gui_save(void *list) {
 	/**/
 }
 
-void ucpcal_gui_add(void *data) {
+void ucpcal_gui_add(void *list) {
 	/**/
 }
 
-void ucpcal_gui_edit(void *data) {
+void ucpcal_gui_edit(void *list) {
 	/**/
 }
 
-void ucpcal_gui_delete(void *data) {
+void ucpcal_gui_delete(void *list) {
 	/**/
 }
 
@@ -137,16 +139,15 @@ char *ucpcal_readline(FILE *f) {
 	return result;
 }
 
-ucpcal_list *ucpcal_load(const char *filename) {
+void ucpcal_load(ucpcal_list *list, const char *filename) {
 	/*
 		For consistent behaviour across platforms, binary mode is off.
 		Please ensure that input calendar files use LF line endings.
 	*/
 	FILE *f = fopen(filename, "r");
-	ucpcal_list *list = NULL;
 	int done = 0;
 	if (f) {
-		list = ucpcal_list_new();
+		ucpcal_list_empty(list);
 		do {
 			int duration;
 			char *name, *location;
@@ -178,5 +179,4 @@ ucpcal_list *ucpcal_load(const char *filename) {
 		} while (!done);
 		fclose(f);
 	}
-	return list;
 }

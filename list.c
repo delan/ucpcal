@@ -27,15 +27,7 @@ ucpcal_list *ucpcal_list_new(void) {
 }
 
 void ucpcal_list_free(ucpcal_list *list) {
-	ucpcal_node *cur = NULL, *next;
-	if (list)
-		cur = list->head;
-	while (cur) {
-		/* Free each node. */
-		next = cur->next;
-		ucpcal_node_free(cur);
-		cur = next;
-	}
+	ucpcal_list_empty(list);
 	/* Free the list. */
 	free(list);
 }
@@ -90,6 +82,18 @@ ucpcal_event *ucpcal_list_find(ucpcal_list *list, const char *name) {
 		cur = cur->next;
 	}
 	return result;
+}
+
+void ucpcal_list_empty(ucpcal_list *list) {
+	ucpcal_node *cur = NULL, *next;
+	if (list)
+		cur = list->head;
+	while (cur) {
+		/* Free each node. */
+		next = cur->next;
+		ucpcal_node_free(cur);
+		cur = next;
+	}
 }
 
 void ucpcal_list_print_debug(ucpcal_list *list) {

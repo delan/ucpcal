@@ -90,6 +90,14 @@ void ucpcal_list_delete(ucpcal_list *list, const char *name);
 ucpcal_event *ucpcal_list_find(ucpcal_list *list, const char *name);
 
 /**
+ * @brief Empties a linked list.
+ * All nodes and their events are removed and freed.
+ * @param list the linked list to empty
+ */
+
+void ucpcal_list_empty(ucpcal_list *list);
+
+/**
  * @brief Prints out an event list, for debugging purposes.
  * @param list the linked list to use
  */
