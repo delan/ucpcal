@@ -156,10 +156,12 @@ void ucpcal_gui_add(void *state) {
 		event->date.good = 1;
 		event->duration = atoi(inputs[5]);
 		event->name = inputs[6];
-		if (strlen(inputs[7]) > 0)
+		if (strlen(inputs[7]) > 0) {
 			event->location = inputs[7];
-		else
+		} else {
+			event->location = NULL;
 			free(inputs[7]);
+		}
 		ucpcal_list_append(s->list, event);
 		ucpcal_gui_update(s);
 	} else {
@@ -223,10 +225,12 @@ void ucpcal_gui_edit_more(void *state, ucpcal_event *event) {
 		event->date.good = 1;
 		event->duration = atoi(inputs[5]);
 		event->name = inputs[6];
-		if (strlen(inputs[7]) > 0)
+		if (strlen(inputs[7]) > 0) {
 			event->location = inputs[7];
-		else
+		} else {
+			event->location = NULL;
 			free(inputs[7]);
+		}
 		ucpcal_gui_update(s);
 	} else {
 		free(inputs[6]);
