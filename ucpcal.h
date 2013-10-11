@@ -29,13 +29,38 @@ int main(int argc, char **argv);
 
 void ucpcal_gui(void);
 
+/**
+ * @brief GUI: loads calendar data from a file.
+ * @param data unused
+ */
+
 void ucpcal_gui_load(void *data);
+
+/**
+ * @brief GUI: saves calendar data to a file.
+ * @param data unused
+ */
 
 void ucpcal_gui_save(void *data);
 
+/**
+ * @brief GUI: adds an event to the current calendar.
+ * @param data unused
+ */
+
 void ucpcal_gui_add(void *data);
 
+/**
+ * @brief GUI: edits an event in the current calendar.
+ * @param data unused
+ */
+
 void ucpcal_gui_edit(void *data);
+
+/**
+ * @brief GUI: deletes an event from the current calendar.
+ * @param data unused
+ */
 
 void ucpcal_gui_delete(void *data);
 
