@@ -94,6 +94,11 @@ void ucpcal_list_empty(ucpcal_list *list) {
 		ucpcal_node_free(cur);
 		cur = next;
 	}
+	/* Tie up loose ends. */
+	if (list) {
+		list->head = NULL;
+		list->tail = NULL;
+	}
 }
 
 void ucpcal_list_print_debug(ucpcal_list *list) {
