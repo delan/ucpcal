@@ -41,6 +41,13 @@ int main(int argc, char **argv);
 void ucpcal_gui(ucpcal_list *list);
 
 /**
+ * @brief Regenerates and rewrites the main calendar view field.
+ * @param state the ucpcal_state consisting of a window and linked list
+ */
+
+void ucpcal_gui_update(ucpcal_state *state);
+
+/**
  * @brief Builds a heap allocated string from the current calendar for the GUI.
  * Be sure to use free() when finished.
  * @param list the linked list of calendar events

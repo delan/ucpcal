@@ -25,7 +25,6 @@ int main(int argc, char **argv) {
 }
 
 void ucpcal_gui(ucpcal_list *list) {
-	char *output;
 	Window *win = createWindow("Calendar: Delan Azabani #17065012");
 	ucpcal_state state;
 	state.win = win;
@@ -35,11 +34,15 @@ void ucpcal_gui(ucpcal_list *list) {
 	addButton(win, "Add a calendar event", &ucpcal_gui_add, &state);
 	addButton(win, "Edit a calendar event", &ucpcal_gui_edit, &state);
 	addButton(win, "Delete a calendar event", &ucpcal_gui_delete, &state);
-	output = ucpcal_gui_build_output(list);
-	setText(win, output);
-	free(output);
+	ucpcal_gui_update(&state);
 	runGUI(win);
 	freeWindow(win);
+}
+
+void ucpcal_gui_update(ucpcal_state *state) {
+	char *output = ucpcal_gui_build_output(state->list);
+	setText(state->win, output);
+	free(output);
 }
 
 char *ucpcal_gui_build_output(ucpcal_list *list) {
@@ -105,12 +108,9 @@ void ucpcal_gui_load(void *state) {
 	ucpcal_state *s = (ucpcal_state *) state;
 	InputProperties props[] = {{ "Input filename", 255, 0 }};
 	char *filename = (char *) calloc(256, sizeof(char));
-	char *output;
 	if (dialogBox(s->win, "Open file", 1, props, &filename)) {
 		ucpcal_load(s->list, filename);
-		output = ucpcal_gui_build_output(s->list);
-		setText(s->win, output);
-		free(output);
+		ucpcal_gui_update(s);
 	}
 	free(filename);
 }
@@ -125,7 +125,46 @@ void ucpcal_gui_save(void *state) {
 }
 
 void ucpcal_gui_add(void *state) {
-	/**/
+	ucpcal_state *s = (ucpcal_state *) state;
+	InputProperties props[] = {
+		{ "Year", 24, 0 },
+		{ "Month", 2, 0 },
+		{ "Day", 2, 0 },
+		{ "Hour", 2, 0 },
+		{ "Minute", 2, 0 },
+		{ "Duration in minutes", 24, 0 },
+		{ "Name of event", 255, 0 },
+		{ "Optional location", 255, 0 }
+	};
+	int i;
+	char *inputs[8];
+	inputs[0] = (char *) calloc(25, sizeof(char));
+	inputs[1] = (char *) calloc(3, sizeof(char));
+	inputs[2] = (char *) calloc(3, sizeof(char));
+	inputs[3] = (char *) calloc(3, sizeof(char));
+	inputs[4] = (char *) calloc(3, sizeof(char));
+	inputs[5] = (char *) calloc(25, sizeof(char));
+	inputs[6] = (char *) calloc(256, sizeof(char));
+	inputs[7] = (char *) calloc(256, sizeof(char));
+	if (dialogBox(s->win, "Add calendar event", 8, props, inputs)) {
+		ucpcal_event *event = ucpcal_event_new();
+		event->date.year = atoi(inputs[0]);
+		event->date.month = atoi(inputs[1]);
+		event->date.day = atoi(inputs[2]);
+		event->date.hour = atoi(inputs[3]);
+		event->date.minute = atoi(inputs[4]);
+		event->duration = atoi(inputs[5]);
+		event->date.good = 1;
+		event->name = inputs[6];
+		if (strlen(inputs[7]) > 0)
+			event->location = inputs[7];
+		else
+			free(inputs[7]);
+		ucpcal_list_append(s->list, event);
+		ucpcal_gui_update(s);
+	}
+	for (i = 0; i < 6; i++)
+		free(inputs[i]);
 }
 
 void ucpcal_gui_edit(void *state) {
