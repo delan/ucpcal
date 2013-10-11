@@ -162,6 +162,9 @@ void ucpcal_gui_add(void *state) {
 			free(inputs[7]);
 		ucpcal_list_append(s->list, event);
 		ucpcal_gui_update(s);
+	} else {
+		free(inputs[6]);
+		free(inputs[7]);
 	}
 	for (i = 0; i < 6; i++)
 		free(inputs[i]);
@@ -225,6 +228,9 @@ void ucpcal_gui_edit_more(void *state, ucpcal_event *event) {
 		else
 			free(inputs[7]);
 		ucpcal_gui_update(s);
+	} else {
+		free(inputs[6]);
+		free(inputs[7]);
 	}
 	for (i = 0; i < 6; i++)
 		free(inputs[i]);
