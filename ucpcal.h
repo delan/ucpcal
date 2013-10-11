@@ -24,6 +24,22 @@
 int main(int argc, char **argv);
 
 /**
+ * @brief Sets up, runs and cleans up calendar application GUI.
+ */
+
+void ucpcal_gui(void);
+
+void ucpcal_gui_load(void *data);
+
+void ucpcal_gui_save(void *data);
+
+void ucpcal_gui_add(void *data);
+
+void ucpcal_gui_edit(void *data);
+
+void ucpcal_gui_delete(void *data);
+
+/**
  * @brief Reads a string from the given file handle until the next newline.
  * Allocates and reallocates buffers of increasing size as more space is
  * required, doubling the size of the buffer each time to only require O(log n)

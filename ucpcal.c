@@ -8,7 +8,6 @@
 int main(int argc, char **argv) {
 	int return_value = 0;
 	ucpcal_list *list = NULL;
-	Window *win;
 	switch (argc) {
 	case 1:
 		break;
@@ -20,11 +19,40 @@ int main(int argc, char **argv) {
 		return_value = 1;
 		break;
 	}
-	win = createWindow("Unix and C Programming 120: Calendar");
-	runGUI(win);
-	freeWindow(win);
+	ucpcal_gui();
 	ucpcal_list_free(list);
 	return return_value;
+}
+
+void ucpcal_gui(void) {
+	Window *win = createWindow("Calendar: Delan Azabani #17065012");
+	addButton(win, "Load a calendar from file", &ucpcal_gui_load, NULL);
+	addButton(win, "Save this calendar to file", &ucpcal_gui_save, NULL);
+	addButton(win, "Add a calendar event", &ucpcal_gui_add, NULL);
+	addButton(win, "Edit a calendar event", &ucpcal_gui_edit, NULL);
+	addButton(win, "Delete a calendar event", &ucpcal_gui_delete, NULL);
+	runGUI(win);
+	freeWindow(win);
+}
+
+void ucpcal_gui_load(void *data) {
+	/**/
+}
+
+void ucpcal_gui_save(void *data) {
+	/**/
+}
+
+void ucpcal_gui_add(void *data) {
+	/**/
+}
+
+void ucpcal_gui_edit(void *data) {
+	/**/
+}
+
+void ucpcal_gui_delete(void *data) {
+	/**/
 }
 
 char *ucpcal_readline(FILE *f) {
