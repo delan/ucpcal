@@ -25,4 +25,8 @@ docs:
 	doxygen Doxyfile
 
 clean:
-	rm -rfv $(OBJ) ucpcal docs *.stackdump
+	rm -rfv $(OBJ) ucpcal docs *.stackdump submission
+
+submission: clean
+	mkdir -pv submission
+	tar cvzf submission/submission.tar.gz * .git* --exclude=submission
