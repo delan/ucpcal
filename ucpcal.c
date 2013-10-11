@@ -13,9 +13,6 @@ int main(int argc, char **argv) {
 		break;
 	case 2:
 		ucpcal_load(list, argv[1]);
-		ucpcal_load(list, argv[1]);
-		ucpcal_load(list, argv[1]);
-		ucpcal_load(list, argv[1]);
 		break;
 	default:
 		fprintf(stderr, "Usage: %s [filename?]\n", argv[0]);
