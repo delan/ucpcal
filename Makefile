@@ -3,8 +3,6 @@ CFLAGS=-ansi -pedantic -Wall `pkg-config --cflags gtk+-2.0`
 LDLIBS=`pkg-config --libs gtk+-2.0`
 OBJ=ucpcal.o date.o
 
-all: ucpcal docs
-
 ucpcal: $(OBJ)
 	$(CC) -o ucpcal $(OBJ) $(LDLIBS)
 
