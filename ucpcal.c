@@ -172,7 +172,14 @@ void ucpcal_gui_edit(void *state) {
 }
 
 void ucpcal_gui_delete(void *state) {
-	/**/
+	ucpcal_state *s = (ucpcal_state *) state;
+	InputProperties props[] = {{ "Name of event", 255, 0 }};
+	char *name = (char *) calloc(256, sizeof(char));
+	if (dialogBox(s->win, "Delete calendar event", 1, props, &name)) {
+		ucpcal_list_delete(s->list, name);
+		ucpcal_gui_update(s);
+	}
+	free(name);
 }
 
 char *ucpcal_readline(FILE *f) {
