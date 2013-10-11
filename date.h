@@ -7,6 +7,8 @@
 #define UCPCAL_DATE_H
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * @brief A data structure representing a date and time.
