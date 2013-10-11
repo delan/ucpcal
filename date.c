@@ -16,14 +16,15 @@ ucpcal_date ucpcal_date_scan(void) {
 		that have static storage duration.
 	*/
 	ucpcal_date date = {0};
-	scanf(
+	if (scanf(
 		"%d-%d-%d %d:%d",
 		&date.year,
 		&date.month,
 		&date.day,
 		&date.hour,
 		&date.minute
-	);
+	) == 5)
+		date.good = 1;
 	return date;
 }
 

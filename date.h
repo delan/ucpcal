@@ -17,6 +17,7 @@
  */
 
 typedef struct ucpcal_date {
+	int good;
 	int year;
 	int month;
 	int day;
