@@ -27,11 +27,14 @@ int main(int argc, char **argv) {
 void ucpcal_gui(ucpcal_list *list) {
 	char *output;
 	Window *win = createWindow("Calendar: Delan Azabani #17065012");
-	addButton(win, "Load a calendar from file", &ucpcal_gui_load, list);
-	addButton(win, "Save this calendar to file", &ucpcal_gui_save, list);
-	addButton(win, "Add a calendar event", &ucpcal_gui_add, list);
-	addButton(win, "Edit a calendar event", &ucpcal_gui_edit, list);
-	addButton(win, "Delete a calendar event", &ucpcal_gui_delete, list);
+	ucpcal_state state;
+	state.win = win;
+	state.list = list;
+	addButton(win, "Load a calendar from file", &ucpcal_gui_load, &state);
+	addButton(win, "Save this calendar to file", &ucpcal_gui_save, &state);
+	addButton(win, "Add a calendar event", &ucpcal_gui_add, &state);
+	addButton(win, "Edit a calendar event", &ucpcal_gui_edit, &state);
+	addButton(win, "Delete a calendar event", &ucpcal_gui_delete, &state);
 	output = ucpcal_gui_build_output(list);
 	setText(win, output);
 	free(output);
@@ -96,23 +99,33 @@ char *ucpcal_gui_build_output(ucpcal_list *list) {
 	return result;
 }
 
-void ucpcal_gui_load(void *list) {
+void ucpcal_gui_load(void *state) {
+	ucpcal_state *s = (ucpcal_state *) state;
+	InputProperties props[] = {{ "Input filename", 255, 0 }};
+	char *filename = (char *) calloc(256, sizeof(char));
+	char *output;
+	if (dialogBox(s->win, "Open file", 1, props, &filename)) {
+		ucpcal_load(s->list, filename);
+		output = ucpcal_gui_build_output(s->list);
+		setText(s->win, output);
+		free(output);
+	}
+	free(filename);
+}
+
+void ucpcal_gui_save(void *state) {
 	/**/
 }
 
-void ucpcal_gui_save(void *list) {
+void ucpcal_gui_add(void *state) {
 	/**/
 }
 
-void ucpcal_gui_add(void *list) {
+void ucpcal_gui_edit(void *state) {
 	/**/
 }
 
-void ucpcal_gui_edit(void *list) {
-	/**/
-}
-
-void ucpcal_gui_delete(void *list) {
+void ucpcal_gui_delete(void *state) {
 	/**/
 }
 

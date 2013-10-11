@@ -15,6 +15,16 @@
 #include "list.h"
 
 /**
+ * @brief A data structure for passing state to GTK+ callbacks.
+ * Contains a window handle and a pointer to a linked list of events.
+ */
+
+typedef struct ucpcal_state {
+	Window *win;
+	ucpcal_list *list;
+} ucpcal_state;
+
+/**
  * @brief The main entry point for the calendar application.
  * @param argc the number of command line arguments
  * @param argv the command line argument vector
