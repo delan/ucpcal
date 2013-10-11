@@ -5,7 +5,7 @@
 
 #include "date.h"
 
-ucpcal_date ucpcal_date_scan() {
+ucpcal_date ucpcal_date_scan(void) {
 	/*
 		Initialises the struct with all fields set to zero.
 		From ISO 9899:1990, §6.5.7, page 72:

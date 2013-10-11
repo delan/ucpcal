@@ -26,6 +26,6 @@ typedef struct ucpcal_date {
  * @return the struct ucpcal_date value of the input date
  */
 
-ucpcal_date ucpcal_date_scan();
+ucpcal_date ucpcal_date_scan(void);
 
 #endif
