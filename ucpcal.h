@@ -12,6 +12,7 @@
 #include "gui.h"
 #include "date.h"
 #include "event.h"
+#include "list.h"
 
 /**
  * @brief Reads a string from stdin until the next newline.

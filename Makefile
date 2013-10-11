@@ -8,7 +8,7 @@ all: ucpcal docs
 ucpcal: $(OBJ)
 	$(CC) -o ucpcal $(OBJ) $(LDLIBS)
 
-ucpcal.o: ucpcal.c ucpcal.h gui.h date.h event.h
+ucpcal.o: ucpcal.c ucpcal.h gui.h date.h event.h list.h
 	$(CC) $(CFLAGS) -c -o ucpcal.o ucpcal.c
 
 date.o: date.c date.h
