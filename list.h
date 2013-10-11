@@ -1,6 +1,9 @@
 /**
  * @file list.h
  * @brief Data structures and algorithms for linked lists of events.
+ * To improve performance and simplicity, the data of the calendar event struct
+ * is stored directly within the list node, avoiding the need to make and free
+ * two separate allocations. The linked list is double ended and doubly linked.
  */
 
 #ifndef UCPCAL_LIST_H
