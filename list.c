@@ -86,3 +86,21 @@ ucpcal_event *ucpcal_list_find(ucpcal_list *list, const char *name) {
 	}
 	return result;
 }
+
+void ucpcal_list_print_debug(ucpcal_list *list) {
+	ucpcal_node *cur = list->head;
+	while (cur) {
+		printf(
+			"%04d-%02d-%02dT%02d:%02d|%d|%s|%s\n",
+			cur->event->date.year,
+			cur->event->date.month,
+			cur->event->date.day,
+			cur->event->date.hour,
+			cur->event->date.minute,
+			cur->event->duration,
+			cur->event->name,
+			cur->event->location
+		);
+		cur = cur->next;
+	}
+}

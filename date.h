@@ -26,11 +26,12 @@ typedef struct ucpcal_date {
 } ucpcal_date;
 
 /**
- * @brief Reads a date from stdin in the format "YYYY-MM-DD HH:MM".
+ * @brief Reads a date from a file handle in the format "YYYY-MM-DD HH:MM".
+ * @param f the file handle to read from
  * @return the struct ucpcal_date value of the input date
  */
 
-ucpcal_date ucpcal_date_scan(void);
+ucpcal_date ucpcal_date_scan(FILE *f);
 
 /**
  * @brief Expresses a duration in minutes as a friendly string.

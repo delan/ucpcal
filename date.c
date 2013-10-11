@@ -5,7 +5,7 @@
 
 #include "date.h"
 
-ucpcal_date ucpcal_date_scan(void) {
+ucpcal_date ucpcal_date_scan(FILE *f) {
 	/*
 		Initialises the struct with all fields set to zero.
 		From ISO 9899:1990, §6.5.7, page 72:
@@ -16,7 +16,7 @@ ucpcal_date ucpcal_date_scan(void) {
 		that have static storage duration.
 	*/
 	ucpcal_date date = {0};
-	if (scanf(
+	if (fscanf(f,
 		"%d-%d-%d %d:%d",
 		&date.year,
 		&date.month,

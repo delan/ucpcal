@@ -89,4 +89,11 @@ void ucpcal_list_delete(ucpcal_list *list, const char *name);
 
 ucpcal_event *ucpcal_list_find(ucpcal_list *list, const char *name);
 
+/**
+ * @brief Prints out an event list, for debugging purposes.
+ * @param list the linked list to use
+ */
+
+void ucpcal_list_print_debug(ucpcal_list *list);
+
 #endif
