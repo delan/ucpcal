@@ -65,8 +65,10 @@ void ucpcal_list_delete(ucpcal_list *list, const char *name) {
 			ucpcal_node_free(cur);
 			done = 1;
 		}
-		prev = cur;
-		cur = cur->next;
+		if (!done) {
+			prev = cur;
+			cur = cur->next;
+		}
 	}
 }
 
