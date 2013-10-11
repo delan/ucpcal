@@ -19,6 +19,7 @@ int main(int argc, char **argv) {
 		return_value = 1;
 		break;
 	}
+	ucpcal_list_free(list);
 	return return_value;
 }
 
