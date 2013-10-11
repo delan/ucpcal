@@ -65,7 +65,7 @@ ucpcal_list *ucpcal_load(const char *filename) {
 				location = ucpcal_readline(f);
 				if (strlen(location) > 0)
 					/* Discard the following blank line. */
-					ucpcal_readline(f);
+					free(ucpcal_readline(f));
 				event = ucpcal_event_new();
 				event->date = date;
 				event->duration = duration;
