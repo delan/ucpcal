@@ -39,16 +39,19 @@ void ucpcal_list_free(ucpcal_list *list) {
 }
 
 void ucpcal_list_append(ucpcal_list *list, ucpcal_event *event) {
-	ucpcal_node *node = ucpcal_node_new();
-	node->event = event;
-	if (list->tail)
-		/* If there is a last element, add the node after it. */
-		list->tail->next = node;
-	else
-		/* The list is empty; the appended node is the new head. */
-		list->head = node;
-	/* Regardless of what happens, the appended node is the new tail. */
-	list->tail = node;
+	ucpcal_node *node;
+	if (!ucpcal_list_find(list, event->name)) {
+		node = ucpcal_node_new();
+		node->event = event;
+		if (list->tail)
+			/* If there's a last element, add the node after it. */
+			list->tail->next = node;
+		else
+			/* The list's empty; appended node is the new head. */
+			list->head = node;
+		/* Regardless, appended node is the new tail. */
+		list->tail = node;
+	}
 }
 
 void ucpcal_list_delete(ucpcal_list *list, const char *name) {
