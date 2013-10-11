@@ -9,7 +9,7 @@
 #include "event.h"
 
 /**
- * A data structure representing a linked list node for an event.
+ * @brief A data structure representing a linked list node for an event.
  */
 
 typedef struct ucpcal_node {
@@ -19,7 +19,7 @@ typedef struct ucpcal_node {
 } ucpcal_node;
 
 /**
- * A data structure representing an entire linked list of events.
+ * @brief A data structure representing an entire linked list of events.
  */
 
 typedef struct ucpcal_list {

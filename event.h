@@ -9,7 +9,7 @@
 #include "date.h"
 
 /**
- * A data structure representing a calendar event.
+ * @brief A data structure representing a calendar event.
  */
 
 typedef struct ucpcal_event {

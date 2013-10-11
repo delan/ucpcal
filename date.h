@@ -9,8 +9,9 @@
 #include <stdio.h>
 
 /**
- * A simple data structure that stores a date in the Gregorian calendar, and
- * a time of the day on the 24-hour clock.
+ * @brief A data structure representing a date and time.
+ * The date is a year, month and day in the Gregorian calendar, and the time of
+ * that date is the hour and minute of the 24-hour clock.
  */
 
 typedef struct ucpcal_date {
@@ -22,7 +23,7 @@ typedef struct ucpcal_date {
 } ucpcal_date;
 
 /**
- * Reads a date from stdin in the format "YYYY-MM-DD HH:MM".
+ * @brief Reads a date from stdin in the format "YYYY-MM-DD HH:MM".
  * @return the struct ucpcal_date value of the input date
  */
 
