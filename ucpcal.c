@@ -63,9 +63,15 @@ ucpcal_list *ucpcal_load(const char *filename) {
 				fscanf(f, " %d ", &duration);
 				name = ucpcal_readline(f);
 				location = ucpcal_readline(f);
-				if (strlen(location) > 0)
+				if (strlen(location) > 0) {
 					/* Discard the following blank line. */
 					free(ucpcal_readline(f));
+				} else {
+					/* Free the empty location string. */
+					free(location);
+					/* Set the location pointer to NULL. */
+					location = NULL;
+				}
 				event = ucpcal_event_new();
 				event->date = date;
 				event->duration = duration;
@@ -78,5 +84,6 @@ ucpcal_list *ucpcal_load(const char *filename) {
 		} while (!done);
 		fclose(f);
 	}
+	ucpcal_list_print_debug(list);
 	return list;
 }
