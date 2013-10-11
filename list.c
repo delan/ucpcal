@@ -27,7 +27,9 @@ ucpcal_list *ucpcal_list_new(void) {
 }
 
 void ucpcal_list_free(ucpcal_list *list) {
-	ucpcal_node *cur = list->head, *next;
+	ucpcal_node *cur = NULL, *next;
+	if (list)
+		cur = list->head;
 	while (cur) {
 		/* Free each node. */
 		next = cur->next;
