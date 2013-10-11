@@ -114,7 +114,12 @@ void ucpcal_gui_load(void *state) {
 }
 
 void ucpcal_gui_save(void *state) {
-	/**/
+	ucpcal_state *s = (ucpcal_state *) state;
+	InputProperties props[] = {{ "Output filename", 255, 0 }};
+	char *filename = (char *) calloc(256, sizeof(char));
+	if (dialogBox(s->win, "Save file", 1, props, &filename))
+		ucpcal_save(s->list, filename);
+	free(filename);
 }
 
 void ucpcal_gui_add(void *state) {
@@ -187,6 +192,31 @@ void ucpcal_load(ucpcal_list *list, const char *filename) {
 				done = 1;
 			}
 		} while (!done);
+		fclose(f);
+	}
+}
+
+void ucpcal_save(ucpcal_list *list, const char *filename) {
+	/* For consistent behaviour across platforms, binary mode is on. */
+	FILE *f = fopen(filename, "wb");
+	if (f) {
+		ucpcal_node *cur = list->head;
+		while (cur) {
+			fprintf(f,
+				"%d-%02d-%02d %02d:%02d %d %s%s%s\n\n",
+				cur->event->date.year,
+				cur->event->date.month,
+				cur->event->date.day,
+				cur->event->date.hour,
+				cur->event->date.minute,
+				cur->event->duration,
+				cur->event->name,
+				cur->event->location ? "\n" : "",
+				cur->event->location ?
+					cur->event->location : ""
+			);
+			cur = cur->next;
+		}
 		fclose(f);
 	}
 }

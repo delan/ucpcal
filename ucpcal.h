@@ -51,38 +51,38 @@ char *ucpcal_gui_build_output(ucpcal_list *list);
 
 /**
  * @brief GUI: loads calendar data from a file.
- * @param list the linked list of calendar events
+ * @param state the ucpcal_state consisting of a window and linked list
  */
 
-void ucpcal_gui_load(void *list);
+void ucpcal_gui_load(void *state);
 
 /**
  * @brief GUI: saves calendar data to a file.
- * @param list the linked list of calendar events
+ * @param state the ucpcal_state consisting of a window and linked list
  */
 
-void ucpcal_gui_save(void *list);
+void ucpcal_gui_save(void *state);
 
 /**
  * @brief GUI: adds an event to the current calendar.
- * @param list the linked list of calendar events
+ * @param state the ucpcal_state consisting of a window and linked list
  */
 
-void ucpcal_gui_add(void *list);
+void ucpcal_gui_add(void *state);
 
 /**
  * @brief GUI: edits an event in the current calendar.
- * @param list the linked list of calendar events
+ * @param state the ucpcal_state consisting of a window and linked list
  */
 
-void ucpcal_gui_edit(void *list);
+void ucpcal_gui_edit(void *state);
 
 /**
  * @brief GUI: deletes an event from the current calendar.
- * @param list the linked list of calendar events
+ * @param state the ucpcal_state consisting of a window and linked list
  */
 
-void ucpcal_gui_delete(void *list);
+void ucpcal_gui_delete(void *state);
 
 /**
  * @brief Reads a string from the given file handle until the next newline.
@@ -104,5 +104,13 @@ char *ucpcal_readline(FILE *f);
  */
 
 void ucpcal_load(ucpcal_list *list, const char *filename);
+
+/**
+ * @brief Saves calendar data to a file from a linked list of events.
+ * @param list the linked list of calendar events
+ * @param filename the filename to output calendar data to
+ */
+
+void ucpcal_save(ucpcal_list *list, const char *filename);
 
 #endif
