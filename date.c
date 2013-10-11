@@ -27,7 +27,7 @@ ucpcal_date ucpcal_date_scan(void) {
 	return date;
 }
 
-const char *ucpcal_duration_friendly(int minutes) {
+const char *ucpcal_duration_friendly(unsigned int minutes) {
 	static char result[40] = "";
 	int output_hours = minutes / 60;
 	int output_minutes = minutes % 60;
