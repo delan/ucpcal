@@ -14,7 +14,7 @@
 
 typedef struct ucpcal_event {
 	ucpcal_date date_time;
-	int duration_minutes;
+	unsigned int duration_minutes;
 	char *name;
 	char *location;
 } ucpcal_event;
