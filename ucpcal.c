@@ -78,7 +78,7 @@ char *ucpcal_gui_build_output(ucpcal_list *list) {
 	result = (char *) malloc(size);
 	result_cursor = result;
 	/* Terminate the string correctly first in case there are no nodes. */
-	sprintf(result_cursor, "");
+	strcpy(result_cursor, "");
 	/* For each event, let's append to the string. */
 	cur = list->head;
 	while (cur) {
