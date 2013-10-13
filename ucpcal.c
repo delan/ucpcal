@@ -273,8 +273,12 @@ char *ucpcal_readline(FILE *f) {
 
 void ucpcal_load(ucpcal_list *list, const char *filename) {
 	/*
-		For consistent behaviour across platforms, binary mode is off.
-		Please ensure that input calendar files use LF line endings.
+		Postel's law: be conservative in what you do, be liberal in
+		what you accept from others.
+
+		Binary mode is OFF here so that files with CR+LF line endings
+		can be read properly, at least on Windows, though hopefully
+		users of other platforms won't use CR+LF delimited input.
 	*/
 	FILE *f = fopen(filename, "r");
 	int done = 0;
@@ -314,7 +318,13 @@ void ucpcal_load(ucpcal_list *list, const char *filename) {
 }
 
 void ucpcal_save(ucpcal_list *list, const char *filename) {
-	/* For consistent behaviour across platforms, binary mode is on. */
+	/*
+		Postel's law: be conservative in what you do, be liberal in
+		what you accept from others.
+
+		Binary mode is ON here so that regardless of platform, we
+		standardise on outputting files with LF line endings.
+	*/
 	FILE *f = fopen(filename, "wb");
 	if (f) {
 		ucpcal_node *cur = list->head;
