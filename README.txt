@@ -48,7 +48,9 @@ Also included are the remaining non-source files and directories:
 * Makefile: POSIX make recipes for building the program
 * Doxyfile: configuration file for the Doxygen documentation generator
 * README.txt: this README file
-* test.txt: a valid calendar file input for testing purposes, from the spec
+* test.txt: a valid calendar file input for testing purposes, including all
+  four events from the specification, as well as one bonus event for testing
+  the handling of long strings
 * .git*: metadata for the Git DVCS (you can view my development progress!)
 
 The Makefile mentioned above has the following rules:
