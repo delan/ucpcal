@@ -81,7 +81,7 @@ char *ucpcal_gui_build_output(ucpcal_list *list) {
 	result = (char *) malloc(size);
 	result_cursor = result;
 	/* Terminate the string correctly first in case there are no nodes. */
-	strcpy(result_cursor, "");
+	*result_cursor = 0;
 	/* For each event, let's append to the string. */
 	cur = list->head;
 	while (cur) {
@@ -210,10 +210,10 @@ void ucpcal_gui_edit_more(void *state, ucpcal_event *event) {
 	inputs[5] = (char *) calloc(25, sizeof(char));
 	sprintf(inputs[5], "%d", event->duration);
 	inputs[6] = (char *) calloc(256, sizeof(char));
-	strcpy(inputs[6], event->name);
+	strncpy(inputs[6], event->name, 255);
 	inputs[7] = (char *) calloc(256, sizeof(char));
 	if (event->location)
-		strcpy(inputs[7], event->location);
+		strncpy(inputs[7], event->location, 255);
 	if (dialogBox(s->win, "Edit calendar event", 8, props, inputs)) {
 		free(event->name);
 		free(event->location);
